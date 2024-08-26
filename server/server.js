@@ -13,7 +13,7 @@ app.post("/api/signup", async (req, res) => {
   const { name, email, password, confirm_password, resume_url } = req.body;
   try {
     const result = await db.query(
-      "INSERT INTO users (name, email, password, confirm_password, resume_url) VALUES ($1, $2, $3, $4) RETURNING *",
+      "INSERT INTO users (name, email, password, confirm_password, resume_url) VALUES ($1, $2, $3, $4, $5) RETURNING *",
       [name, email, password, confirm_password, resume_url]
     );
     res.status(201).json(result.rows[0]);
