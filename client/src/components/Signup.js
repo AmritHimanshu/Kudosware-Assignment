@@ -8,13 +8,49 @@ const Signup = () => {
   const [resume, setResume] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!name || !email || !password || !confirmPassword || !resume){
-        return alert("Please complete the sign up form");
+    if (!name || !email || !password || !confirmPassword || !resume) {
+      return alert("Please complete the sign up form");
     }
-    if(password !== confirmPassword){
-        return alert("Passwords not matched");
+    if (password !== confirmPassword) {
+      return alert("Passwords not matched");
+    }
+
+    const resumeFile = new FormData();
+    resumeFile.append("file", resume);
+    resumeFile.append("upload_preset", "kfgw6ech");
+
+    try {
+      const resCloudinary = await fetch(
+        "https://api.cloudinary.com/v1_1/dgvvfyeji/raw/upload",
+        {
+          method: "POST",
+          body: resumeFile,
+        }
+      );
+
+      const dataCloudinary = await resCloudinary.json();
+      if (dataCloudinary && dataCloudinary.url) {
+        const formDataObj = {
+          name: name,
+          email: email,
+          password: password,
+          confirm_password: confirmPassword,
+          resume_url: dataCloudinary.url,
+        };
+        const response = await fetch("http://localhost:5000/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataObj),
+        });
+        const data = await response.json();
+        console.log("Signup successful:", data);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
     }
   };
 
