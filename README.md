@@ -1,10 +1,9 @@
 # YourHR - Job Search Service
+> **Note:** This project was developed as part of an assignment.
 
 ## Project Overview
 
 **YourHR** is a job search service that aims to help job seekers find the ideal job roles based on their qualifications and preferences. The application allows users to sign up, submit their resumes, and manage their profiles. It’s a straightforward, user-friendly platform that ensures seamless interaction between job seekers and their profiles.
-
-> **Note:** This project was developed as part of an assignment.
 
 ## Features
 
