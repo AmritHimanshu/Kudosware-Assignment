@@ -49,6 +49,7 @@ const Signup = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: 'include',
           body: JSON.stringify(formDataObj),
         });
         const data = await response.json();
