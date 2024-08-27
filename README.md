@@ -79,4 +79,11 @@ CLOUDINARY_URL=cloudinary://your-cloudinary-api-key
   ```sql
   CREATE DATABASE yourhr;
 
+## Start the Server
+
+Start the backend server using the following command:
+```bash
+npm start
+
+
 
