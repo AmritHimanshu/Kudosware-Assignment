@@ -58,3 +58,25 @@
    ```bash
    git clone https://github.com/your-username/yourhr.git
    cd yourhr
+   
+## Installation
+
+2. **Install Dependencies**:
+   ```bash
+   npm install
+
+## Setup Environment Variables
+
+Create a `.env` file in the root directory and add the following environment variables:
+```bash
+DATABASE_URL=postgres://username:password@localhost:5432/yourhr
+CLOUDINARY_URL=cloudinary://your-cloudinary-api-key
+
+## Database Setup
+
+- Ensure PostgreSQL is running.
+- Create the required database by running the following commands in the PostgreSQL CLI:
+  ```sql
+  CREATE DATABASE yourhr;
+
+
