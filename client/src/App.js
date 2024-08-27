@@ -1,13 +1,15 @@
-import ProfilePage from './components/ProfilePage';
-import Signup from './components/Signup';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProfilePage from "./components/ProfilePage";
+import Signup from "./components/Signup";
 
 function App() {
   return (
-    <div>
-      <Signup />
-
-      {/* <ProfilePage /> */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Signup />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+    </Router>
   );
 }
 

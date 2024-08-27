@@ -34,11 +34,33 @@ app.post("/api/signup", async (req, res) => {
     );
 
     const Token = jwt.sign({ email }, process.env.SECRET_KEY);
-    console.log(Token);
     res.cookie("jwtoken", Token);
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/profile", async (req, res) => {
+  try {
+    const token = req.cookies.jwtoken;
+    const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
+    if (!verifyToken) {
+      throw new Error("Token has expired");
+    }
+
+    const user = await db.query("SELECT * FROM users WHERE email = $1", [
+      verifyToken.email,
+    ]);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    res.status(201).send(user.rows[0]);
+  } catch (error) {
     console.error(err.message);
     res.status(500).json({ error: "Internal server error" });
   }
