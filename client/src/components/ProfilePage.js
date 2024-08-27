@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoadingIcon from "./loadingIcon.svg";
 
 const ProfilePage = () => {
@@ -6,6 +7,8 @@ const ProfilePage = () => {
   const [message, setMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -101,12 +104,20 @@ const ProfilePage = () => {
                 View Resume
               </a>
             </p>
+            <div className="flex justify-between">
             <button
               onClick={() => setIsEditing(true)}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             >
               Edit Profile
             </button>
+            <button
+              onClick={()=>navigate('/')}
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Sign in
+            </button>
+            </div>
           </div>
         ) : (
           <>

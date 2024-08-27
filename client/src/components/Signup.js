@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoadingIcon from "./loadingIcon.svg";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,6 +65,7 @@ const Signup = () => {
           setPassword("");
           setConfirmPassword("");
           setResume(null);
+          navigate('/profile');
         }
       } else {
         setMessage("Error in uploading pdf");
