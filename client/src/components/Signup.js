@@ -87,7 +87,7 @@ const Signup = () => {
           className={`absolute top-0 z-50 w-full p-2 font-medium text-sm ${
             message === "Successfully registered"
               ? "bg-green-400"
-              : "bg-red-600 text-white"
+              : "bg-red-500 text-white"
           }`}
         >
           {message}

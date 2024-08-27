@@ -75,7 +75,7 @@ const SignInPage = () => {
           className={`absolute top-0 z-50 w-full p-2 font-medium text-sm ${
             message === "Successfully logged in"
               ? "bg-green-400"
-              : "bg-red-600 text-white"
+              : "bg-red-500 text-white"
           }`}
         >
           {message}
@@ -83,12 +83,12 @@ const SignInPage = () => {
       )}
       {isLoading ? (
         <div className="min-h-screen w-full place-content-center">
-        <img
-          src={LoadingIcon}
-          alt="loading"
-          className="m-auto w-[150px] h-[100px]"
-        />
-      </div>
+          <img
+            src={LoadingIcon}
+            alt="loading"
+            className="m-auto w-[150px] h-[100px]"
+          />
+        </div>
       ) : (
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
           <h1 className="text-2xl font-semibold mb-4">Sign In</h1>

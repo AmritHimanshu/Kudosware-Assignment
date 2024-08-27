@@ -33,11 +33,35 @@ app.post("/api/signup", async (req, res) => {
       [name, email, password, confirm_password, resume_url]
     );
 
-    const Token = jwt.sign({ id:result.rows[0].id }, process.env.SECRET_KEY);
+    const Token = jwt.sign({ id: result.rows[0].id }, process.env.SECRET_KEY);
     res.cookie("jwtoken", Token);
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/signin", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await db.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+
+    if (!user.rows[0]) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    if (user.rows[0].password !== password) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const Token = jwt.sign({ id: user.rows[0].id }, process.env.SECRET_KEY);
+    res.cookie("jwtoken", Token);
+
+    res.status(201).json({ message: "Successfully logged in" });
+  } catch (error) {
     console.error(err.message);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -53,15 +77,18 @@ app.post("/api/profile/edit", async (req, res) => {
 
     const { id, name, email, password, confirm_password, resume_url } =
       req.body;
-      const user = await db.query("SELECT * FROM users WHERE id = $1",[id]);
-      if(!user){
-        return res.status(401).json({error:"User not found"});
-      }
-      const updatedUser = await db.query("UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *",[name,email,id]);
+    const user = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+    const updatedUser = await db.query(
+      "UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *",
+      [name, email, id]
+    );
 
-      if(updatedUser){
-        return res.status(201).json({message:"Successfully updated"});
-      }
+    if (updatedUser) {
+      return res.status(201).json({ message: "Successfully updated" });
+    }
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -90,6 +117,12 @@ app.get("/api/profile", async (req, res) => {
     console.error(err.message);
     res.status(500).json({ error: "Internal server error" });
   }
+});
+
+app.get("/api/logout", (req, res) => {
+  // res.cookie("jwtoken", "");
+  res.clearCookie('jwtoken', { path: '/' });
+  res.status(201).json({ message: "User Logout" });
 });
 
 app.get("/", (req, res) => {

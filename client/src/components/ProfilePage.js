@@ -10,6 +10,22 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
+  const handleSignedIn = async() => {
+    try {
+        const res = await fetch("http://localhost:5000/api/logout",{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            credentials:'include'
+        });
+        const data = await res.json();
+        navigate('/');
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -77,7 +93,7 @@ const ProfilePage = () => {
           className={`absolute top-0 z-50 w-full p-2 font-medium text-sm ${
             message === "Successfully updated"
               ? "bg-green-400"
-              : "bg-red-600 text-white"
+              : "bg-red-500 text-white"
           }`}
         >
           {message}
@@ -105,30 +121,30 @@ const ProfilePage = () => {
               </a>
             </p>
             <div className="flex justify-between">
-            <button
-              onClick={() => setIsEditing(true)}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            >
-              Edit Profile
-            </button>
-            <button
-              onClick={()=>navigate('/')}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            >
-              Sign in
-            </button>
+              <button
+                onClick={() => setIsEditing(true)}
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Edit Profile
+              </button>
+              <button
+                onClick={handleSignedIn}
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Sign in
+              </button>
             </div>
           </div>
         ) : (
           <>
             {isLoading ? (
               <div className="min-h-screen w-full place-content-center">
-              <img
-                src={LoadingIcon}
-                alt="loading"
-                className="m-auto w-[150px] h-[100px]"
-              />
-            </div>
+                <img
+                  src={LoadingIcon}
+                  alt="loading"
+                  className="m-auto w-[150px] h-[100px]"
+                />
+              </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <h1 className="text-2xl font-semibold mb-4">Edit Profile</h1>
