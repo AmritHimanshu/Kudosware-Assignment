@@ -43,7 +43,33 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
+app.post("/api/profile/edit", async (req, res) => {
+  try {
+    const token = req.cookies.jwtoken;
+    const verifyToken = jwt.verify(token, process.env.SECRET_KEY);
+    if (!verifyToken) {
+      throw new Error("Token has expired");
+    }
+
+    console.log(req.body);
+    const { id, name, email, password, confirm_password, resume_url } =
+      req.body;
+      const user = await db.query("SELECT * FROM users WHERE id = $1",[id]);
+      if(!user){
+        return res.status(401).json({error:"User not found"});
+      }
+      const updatedUser = await db.query("UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *",[name,email,id]);
+      console.log(updatedUser.rows[0]);
+      if(updatedUser){
+        return res.status(201).json({message:"Successfully updated"});
+      }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/api/profile", async (req, res) => {
   try {
     const token = req.cookies.jwtoken;
     const verifyToken = jwt.verify(token, process.env.SECRET_KEY);

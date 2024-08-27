@@ -9,17 +9,36 @@ const ProfilePage = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Update user details (you would send this to your backend)
-    // setUser(formData);
-    // setIsEditing(false);
+    try {
+        const res = await fetch("http://localhost:5000/api/profile/edit",{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(user),
+        });
+        const data = await res.json();
+        if(res.status !== 201){
+            setMessage(data.error);
+        }
+        else{
+            setMessage(data.message);
+        }
+        setTimeout(()=>{
+            setMessage(null);
+        },2000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/profile", {
+        const res = await fetch("http://localhost:5000/api/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -49,7 +68,7 @@ const ProfilePage = () => {
       {message && (
         <div
           className={`absolute top-0 z-50 w-full p-2 font-medium text-sm ${
-            message === "Successfully registered"
+            message === "Successfully updated"
               ? "bg-green-400"
               : "bg-red-600 text-white"
           }`}
