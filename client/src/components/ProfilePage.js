@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import LoadingIcon from "./loadingIcon.svg";
 
 const ProfilePage = () => {
   const [user, setUser] = useState();
   const [message, setMessage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -11,28 +13,30 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-        const res = await fetch("http://localhost:5000/api/profile/edit",{
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(user),
-        });
-        const data = await res.json();
-        if(res.status !== 201){
-            setMessage(data.error);
-        }
-        else{
-            setMessage(data.message);
-        }
-        setTimeout(()=>{
-            setMessage(null);
-        },2000);
+      const res = await fetch("http://localhost:5000/api/profile/edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(user),
+      });
+      const data = await res.json();
+      if (res.status !== 201) {
+        setMessage(data.error);
+      } else {
+        setMessage(data.message);
+        setIsEditing(false);
+      }
+      setTimeout(() => {
+        setMessage(null);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -105,50 +109,62 @@ const ProfilePage = () => {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <h1 className="text-2xl font-semibold mb-4">Edit Profile</h1>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="name">
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={user?.name}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <>
+            {isLoading ? (
+              <div className="min-h-screen w-full place-content-center">
+              <img
+                src={LoadingIcon}
+                alt="loading"
+                className="m-auto w-[150px] h-[100px]"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="email">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={user?.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <button
-                type="submit"
-                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-              >
-                Save Changes
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsEditing(false)}
-                className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <h1 className="text-2xl font-semibold mb-4">Edit Profile</h1>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="name">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={user?.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 mb-2" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={user?.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <button
+                    type="submit"
+                    className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                  >
+                    Save Changes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(false)}
+                    className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+          </>
         )}
       </div>
     </div>

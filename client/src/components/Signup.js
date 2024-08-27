@@ -53,7 +53,6 @@ const Signup = () => {
           body: JSON.stringify(formDataObj),
         });
         const data = await response.json();
-        setIsLoading(false);
         if (response.status !== 201) {
           setMessage(data.error);
         } else {
@@ -74,6 +73,7 @@ const Signup = () => {
     } catch (error) {
       console.error("Error during signup:", error);
     }
+    setIsLoading(false);
   };
 
   return (
