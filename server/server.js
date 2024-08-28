@@ -50,10 +50,10 @@ app.post("/api/signup", async (req, res) => {
 app.post("/api/signin", async (req, res) => {
   const { email, password } = req.body;
   // try {
-    const user = await db.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
-    res.status(201).json(user);
+    // const user = await db.query("SELECT * FROM users WHERE email = $1", [
+    //   email,
+    // ]);
+    res.status(201).json("Hii");
 
   //   if (!user.rows[0]) {
   //     return res.status(401).json({ error: "Invalid credentials" });
