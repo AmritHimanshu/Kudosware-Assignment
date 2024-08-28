@@ -69,6 +69,7 @@ app.post("/api/signin", async (req, res) => {
   //   console.error(err.message);
   //   res.status(500).json({ error: "Internal server error" });
   // }
+  res.status(201).json({message:"Done"})
 });
 
 app.post("/api/profile/edit", async (req, res) => {
