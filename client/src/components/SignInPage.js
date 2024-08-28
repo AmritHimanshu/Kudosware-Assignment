@@ -49,6 +49,7 @@ const SignInPage = () => {
       const res = await fetch(`${apiUrl}/signin`, {
         method: "POST",
         headers: {
+          Accept: 'application/json',
           "Content-Type": "application/json",
         },
         credentials: "include",
