@@ -19,7 +19,7 @@ const ProfilePage = () => {
             },
             credentials:'include'
         });
-        const data = await res.json();
+        await res.json();
         navigate('/');
     } catch (error) {
         console.log(error);

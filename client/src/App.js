@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignInPage from "./components/SignInPage";
 import Signup from "./components/Signup";
 import ProfilePage from "./components/ProfilePage";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 function App() {
 
