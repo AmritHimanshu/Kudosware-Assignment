@@ -49,7 +49,7 @@ const SignInPage = () => {
       const res = await fetch(`${apiUrl}/signin`, {
         method: "POST",
         headers: {
-          Accept: 'application/json',
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         credentials: "include",
@@ -72,7 +72,7 @@ const SignInPage = () => {
     setIsLoading(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const handleSignedIn = async () => {
       try {
         const res = await fetch(`${apiUrl}/logout`, {
@@ -90,7 +90,7 @@ const SignInPage = () => {
     };
 
     handleSignedIn();
-  },[apiUrl]);
+  }, [apiUrl]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -160,6 +160,10 @@ const SignInPage = () => {
               Sign In
             </button>
           </form>
+
+          <div className="mt-5 text-blue-600 text-sm">
+            <a href="/signup">Register now!</a>
+          </div>
         </div>
       )}
     </div>

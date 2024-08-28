@@ -203,6 +203,10 @@ const Signup = () => {
               Sign Up
             </button>
           </form>
+
+          <div className="mt-5 text-blue-600 text-sm">
+          <a href="/">Login now!</a>
+          </div>
         </div>
       )}
     </div>
