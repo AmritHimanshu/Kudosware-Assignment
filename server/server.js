@@ -11,13 +11,13 @@ dotenv.config({ path: './config.env' });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  cors({
-    // origin: true,
-    origin:'https://kudosware-assignment-seven.vercel.app',
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     // origin: true,
+//     origin:'https://kudosware-assignment-seven.vercel.app',
+//     credentials: true,
+//   })
+// );
 
 const PORT = process.env.PORT || 5000;
 
@@ -49,26 +49,27 @@ app.post("/api/signup", async (req, res) => {
 
 app.post("/api/signin", async (req, res) => {
   const { email, password } = req.body;
-  try {
-    const user = await db.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+  res.status(201).json({email,pas});
+  // try {
+  //   const user = await db.query("SELECT * FROM users WHERE email = $1", [
+  //     email,
+  //   ]);
 
-    if (!user.rows[0]) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-    if (user.rows[0].password !== password) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
+  //   if (!user.rows[0]) {
+  //     return res.status(401).json({ error: "Invalid credentials" });
+  //   }
+  //   if (user.rows[0].password !== password) {
+  //     return res.status(401).json({ error: "Invalid credentials" });
+  //   }
 
-    const Token = jwt.sign({ id: user.rows[0].id }, process.env.SECRET_KEY);
-    res.cookie("jwtoken", Token);
+  //   const Token = jwt.sign({ id: user.rows[0].id }, process.env.SECRET_KEY);
+  //   res.cookie("jwtoken", Token);
 
-    res.status(201).json({ message: "Successfully logged in" });
-  } catch (error) {
-    console.error(err.message);
-    res.status(500).json({ error: "Internal server error" });
-  }
+  //   res.status(201).json({ message: "Successfully logged in" });
+  // } catch (error) {
+  //   console.error(err.message);
+  //   res.status(500).json({ error: "Internal server error" });
+  // }
 });
 
 app.post("/api/profile/edit", async (req, res) => {
