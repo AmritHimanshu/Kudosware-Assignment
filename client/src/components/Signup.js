@@ -14,6 +14,9 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const resumeUrl = process.env.REACT_APP_RESUME_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !email || !password || !confirmPassword || !resume) {
@@ -30,13 +33,10 @@ const Signup = () => {
     resumeFile.append("upload_preset", "kfgw6ech");
 
     try {
-      const resCloudinary = await fetch(
-        "https://api.cloudinary.com/v1_1/dgvvfyeji/raw/upload",
-        {
-          method: "POST",
-          body: resumeFile,
-        }
-      );
+      const resCloudinary = await fetch(`${resumeUrl}`, {
+        method: "POST",
+        body: resumeFile,
+      });
 
       const dataCloudinary = await resCloudinary.json();
       if (dataCloudinary && dataCloudinary.url) {
@@ -47,12 +47,12 @@ const Signup = () => {
           confirm_password: confirmPassword,
           resume_url: dataCloudinary.url,
         };
-        const response = await fetch("http://localhost:5000/api/signup", {
+        const response = await fetch(`${apiUrl}/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: 'include',
+          credentials: "include",
           body: JSON.stringify(formDataObj),
         });
         const data = await response.json();
@@ -65,7 +65,7 @@ const Signup = () => {
           setPassword("");
           setConfirmPassword("");
           setResume(null);
-          navigate('/profile');
+          navigate("/profile");
         }
       } else {
         setMessage("Error in uploading pdf");

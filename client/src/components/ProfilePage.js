@@ -8,11 +8,13 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const navigate = useNavigate();
 
   const handleSignedIn = async() => {
     try {
-        const res = await fetch("http://localhost:5000/api/logout",{
+        const res = await fetch(`${apiUrl}/logout`,{
             method:"GET",
             headers:{
                 'Content-Type':'application/json'
@@ -34,7 +36,7 @@ const ProfilePage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/profile/edit", {
+      const res = await fetch(`${apiUrl}/profile/edit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +63,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/profile", {
+        const res = await fetch(`${apiUrl}/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +86,7 @@ const ProfilePage = () => {
     };
 
     getUser();
-  }, []);
+  }, [apiUrl]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 relative">

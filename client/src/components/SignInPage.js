@@ -5,6 +5,8 @@ import LoadingIcon from "./loadingIcon.svg";
 const SignInPage = () => {
   const navigate = useNavigate();
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,7 +46,7 @@ const SignInPage = () => {
 
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/signin", {
+      const res = await fetch(`${apiUrl}/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
