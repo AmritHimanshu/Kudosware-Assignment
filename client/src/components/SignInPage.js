@@ -74,7 +74,6 @@ const SignInPage = () => {
 
   useEffect(()=>{
     const handleSignedIn = async () => {
-      console.log("gfd")
       try {
         const res = await fetch(`${apiUrl}/logout`, {
           method: "GET",
@@ -85,7 +84,6 @@ const SignInPage = () => {
           credentials: "include",
         });
         const data = await res.json();
-        console.log(data.message);
       } catch (error) {
         console.log(error);
       }
