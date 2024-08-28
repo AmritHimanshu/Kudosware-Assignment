@@ -83,7 +83,8 @@ const SignInPage = () => {
           },
           credentials: "include",
         });
-        await res.json();
+        const data = await res.json();
+        console.log(data.message);
       } catch (error) {
         console.log(error);
       }
