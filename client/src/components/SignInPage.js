@@ -106,7 +106,7 @@ const SignInPage = () => {
         </div>
       )}
       {isLoading ? (
-        <div className="min-h-screen w-full place-content-center">
+        <div className="min-h-screen w-screen place-content-center">
           <img
             src={LoadingIcon}
             alt="loading"
