@@ -10,7 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: true,
+    // origin: true,
+    origin:'https://kudosware-assignment-seven.vercel.app',
     credentials: true,
   })
 );
