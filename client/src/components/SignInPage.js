@@ -59,8 +59,9 @@ const SignInPage = () => {
       if (res.status !== 201) {
         setMessage(data.error);
       } else {
-        setMessage(data.message);
-        navigate("/profile");
+        // setMessage(data.message);
+        console.log(data);
+        // navigate("/profile");
       }
       setTimeout(() => {
         setMessage(null);
