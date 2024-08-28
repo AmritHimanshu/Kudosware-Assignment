@@ -11,13 +11,13 @@ dotenv.config({ path: './config.env' });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     // origin: true,
-//     origin:'https://kudosware-assignment-seven.vercel.app',
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    // origin: true,
+    origin:'https://kudosware-assignment-seven.vercel.app',
+    credentials: true,
+  })
+);
 
 const PORT = process.env.PORT || 5000;
 
