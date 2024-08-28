@@ -50,7 +50,7 @@ const Signup = () => {
         const response = await fetch(`${apiUrl}/signup`, {
           method: "POST",
           headers: {
-            Accept: 'application/json',
+            Accept: "application/json",
             "Content-Type": "application/json",
           },
           credentials: "include",
@@ -205,7 +205,7 @@ const Signup = () => {
           </form>
 
           <div className="mt-5 text-blue-600 text-sm">
-          <a href="/">Login now!</a>
+            <a href="/">Login now!</a>
           </div>
         </div>
       )}
