@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingIcon from "./loadingIcon.svg";
 
@@ -71,6 +71,26 @@ const SignInPage = () => {
     }
     setIsLoading(false);
   };
+
+  useEffect(()=>{
+    const handleSignedIn = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/logout`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        await res.json();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    handleSignedIn();
+  },[apiUrl]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">

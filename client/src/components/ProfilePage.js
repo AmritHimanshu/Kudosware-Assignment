@@ -12,23 +12,6 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
-  const handleSignedIn = async () => {
-    try {
-      const res = await fetch(`${apiUrl}/logout`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      await res.json();
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -68,7 +51,7 @@ const ProfilePage = () => {
         const res = await fetch(`${apiUrl}/profile`, {
           method: "GET",
           headers: {
-            Accept: 'application/json',
+            Accept: "application/json",
             "Content-Type": "application/json",
           },
           credentials: "include",
@@ -133,7 +116,7 @@ const ProfilePage = () => {
                 Edit Profile
               </button>
               <button
-                onClick={handleSignedIn}
+                onClick={() => navigate("/")}
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               >
                 Sign in
