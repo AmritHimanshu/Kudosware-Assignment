@@ -3,10 +3,10 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const db = require("./db");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 const app = express();
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: "./config.env" });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(
   cors({
     // origin: true,
-    origin:'https://kudosware-assignment-seven.vercel.app',
+    origin: "https://kudosware-assignment-seven.vercel.app",
     credentials: true,
   })
 );
@@ -38,7 +38,13 @@ app.post("/api/signup", async (req, res) => {
     );
 
     const Token = jwt.sign({ id: result.rows[0].id }, process.env.SECRET_KEY);
-    res.cookie("jwtoken", Token);
+    res.cookie("jwtoken", Token, {
+      expires: new Date(Date.now() + 25892000000),
+      httpOnly: true,
+      secure: true, // Mark as secure if using HTTPS
+      sameSite: "None", // Set SameSite attribute for cross-origin requests
+      path: "/",
+    });
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -62,7 +68,13 @@ app.post("/api/signin", async (req, res) => {
     }
 
     const Token = jwt.sign({ id: user.rows[0].id }, process.env.SECRET_KEY);
-    res.cookie("jwtoken", Token);
+    res.cookie("jwtoken", Token, {
+      expires: new Date(Date.now() + 25892000000),
+      httpOnly: true,
+      secure: true, // Mark as secure if using HTTPS
+      sameSite: "None", // Set SameSite attribute for cross-origin requests
+      path: "/",
+    });
 
     res.status(201).json({ message: "Successfully logged in" });
   } catch (error) {
@@ -125,7 +137,7 @@ app.get("/api/profile", async (req, res) => {
 
 app.get("/api/logout", (req, res) => {
   // res.cookie("jwtoken", "");
-  res.clearCookie('jwtoken', { path: '/' });
+  res.clearCookie("jwtoken", { path: "/" });
   res.status(201).json({ message: "User Logout" });
 });
 
