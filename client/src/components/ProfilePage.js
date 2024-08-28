@@ -12,19 +12,20 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
-  const handleSignedIn = async() => {
+  const handleSignedIn = async () => {
     try {
-        const res = await fetch(`${apiUrl}/logout`,{
-            method:"GET",
-            headers:{
-                'Content-Type':'application/json'
-            },
-            credentials:'include'
-        });
-        await res.json();
-        navigate('/');
+      const res = await fetch(`${apiUrl}/logout`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      await res.json();
+      navigate("/");
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -39,6 +40,7 @@ const ProfilePage = () => {
       const res = await fetch(`${apiUrl}/profile/edit`, {
         method: "POST",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         credentials: "include",
@@ -66,6 +68,7 @@ const ProfilePage = () => {
         const res = await fetch(`${apiUrl}/profile`, {
           method: "GET",
           headers: {
+            Accept: 'application/json',
             "Content-Type": "application/json",
           },
           credentials: "include",
