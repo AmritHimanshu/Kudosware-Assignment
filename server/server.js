@@ -49,7 +49,7 @@ app.post("/api/signup", async (req, res) => {
 
 app.post("/api/signin", async (req, res) => {
   const { email, password } = req.body;
-  res.status(201).json({email,pas});
+  res.status(201).json({email,password});
   // try {
   //   const user = await db.query("SELECT * FROM users WHERE email = $1", [
   //     email,
