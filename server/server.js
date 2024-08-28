@@ -3,7 +3,10 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const db = require("./db");
+const dotenv = require('dotenv');
 const app = express();
+
+dotenv.config({ path: './config.env' });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
