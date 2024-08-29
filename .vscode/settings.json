@@ -18,5 +18,8 @@
             "database": "kudoware_assignment",
             "username": "postgres"
         }
-    ]
+    ],
+    "powermode.enabled": true,
+    "powermode.presets": "particles",
+    "powermode.explosions.gifMode": "continue"
 }
